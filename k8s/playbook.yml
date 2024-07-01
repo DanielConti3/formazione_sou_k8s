@@ -1,0 +1,80 @@
+---
+- name: Host connection
+  hosts: default
+  remote_user: vagrant
+  become: yes
+  tasks:
+    - name: Install dnf-plugins-core
+      dnf:
+        name:
+          - dnf-plugins-core
+          - python3-requests
+        state: present
+
+    - name: Add Docker CE repository
+      command: dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
+      args:
+        creates: /etc/yum.repos.d/docker-ce.repo
+
+    - name: Copy Dockerfile
+      ansible.builtin.template:
+        src: ./Dockerfile
+        dest: ./
+        owner: vagrant
+        group: vagrant
+        mode: "0740"
+
+    - name: Copy casc.yaml
+      ansible.builtin.template:
+        src: ./casc.yaml
+        dest: ./
+        owner: vagrant
+        group: vagrant
+        mode: "0740"
+
+    - name: Copy plugins.txt
+      ansible.builtin.template:
+        src: ./plugins.txt
+        dest: ./
+        owner: vagrant
+        group: vagrant
+        mode: "0740"
+
+    - name: Install Docker
+      dnf:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+        state: present
+        update_cache: yes
+
+    - name: Start and enable Docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Build Docker image
+      docker_image:
+        name: jenkins/jenkins
+        source: build
+        build:
+          path: ./
+          dockerfile: Dockerfile
+
+    - name: Start jenkins container
+      docker_container:
+        name: jenkins
+        image: jenkins/jenkins
+        ports: 
+          - "8080:8080"
+          - "50000:50000"
+        volumes: 
+          - /var/run/docker.sock:/var/run/docker.sock
+    
+    - name: Set permissions docker.sock
+      command: sudo docker exec -u root jenkins chown root:docker /var/run/docker.sock 
+
+        
+
