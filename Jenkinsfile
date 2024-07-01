@@ -1,7 +1,7 @@
 pipeline {
     environment {
-        imagename = "[DockerHub_ID]/[DockerHub_Repo]" // Substitute [] with your info
-        registryCredential = '[DockerHub]' // Substitute [] with your Jenkins DockerHub credentials
+        imagename = "[ContiD]/[track2]" // Substitute [] with your info
+        registryCredential = '[3Stellina3]' // Substitute [] with your Jenkins DockerHub credentials
         dockerImage = ''
     }
     agent any
