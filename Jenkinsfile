@@ -36,9 +36,9 @@ pipeline {
         }
         stage('Building image') {
             steps {
-                script {
-                    dockerImage = docker.build("${imagename}:${env.GIT_COMMIT}")
-                }
+                docker.build(
+                    file: '/formazione_sou_k8s/Jenkins/Dockerfile'
+                )
             }
         }
         stage('Deploy Image') {
