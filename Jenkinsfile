@@ -2,7 +2,7 @@ pipeline {
     environment {
         imagename = "contid/track2" // Substitute [] with your info
         registryCredential = 'DockerHub' // Substitute [] with your Jenkins DockerHub credentials
-        dockerImage = ''
+        dockerImage = 'contid/track2'
     }
     agent any
     stages {
