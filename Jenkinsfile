@@ -36,9 +36,10 @@ pipeline {
         }
         stage('Building image') {
             steps {
-                docker.build(
-                    file: '/formazione_sou_k8s/Jenkins/Dockerfile'
-                )
+                dockerfile {
+                    filename 'Dockerfile'
+                    dir '/formazione_sou_k8s/Jenkins'
+                }
             }
         }
         stage('Deploy Image') {
