@@ -36,10 +36,8 @@ pipeline {
         }
         stage('Building image') {
             steps {
-                agent {
-                    dockerfile {
-                        dir '/formazione_sou_k8s/Jenkins'
-                    }
+                dockerfile {
+                    dir '/formazione_sou_k8s/Jenkins'
                 }
             }
         }
