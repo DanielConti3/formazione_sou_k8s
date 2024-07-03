@@ -4,6 +4,14 @@ pipeline {
         registryCredential = 'DockerHub'
         dockerImage = ''
     }
+        def buildImage(Map args) {
+            def defaults = [
+                dockerfileDir: "./flask-app/",
+                dockerfileName: "Dockerfile",
+                buildArgs: "",
+            ]
+        args = defaults + args
+        }
     agent any
     stages {
         stage('Clean Workspace') {
@@ -34,14 +42,14 @@ pipeline {
 //                }
 //            }
 //        }
-        def buildImage(Map args) {
-            def defaults = [
-                dockerfileDir: "./flask-app/",
-                dockerfileName: "Dockerfile",
-                buildArgs: "",
-            ]
-        args = defaults + args
-        }
+//        def buildImage(Map args) {
+//            def defaults = [
+//                dockerfileDir: "./flask-app/",
+//                dockerfileName: "Dockerfile",
+//                buildArgs: "",
+//            ]
+//        args = defaults + args
+//        }
         stage('Building image') {
             steps {
                 script {
