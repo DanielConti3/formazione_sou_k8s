@@ -35,21 +35,19 @@ pipeline {
 //            }
 //        }
         stage('Building image') {
-           // steps {
-               // script {
-                    def buildAndPushTag(Map args) {
+            steps {
+                script {
+                    def buildImage = "args"
                         def defaults = [
                             //dockerImage = docker.build("${imagename}:${env.GIT_COMMIT}")
-                            registryUrl: 'https://hub.docker.com/repository/docker/contid/track2/general',
                             dockerfileDir: "./flask-app/",
                             dockerfileName: "Dockerfile",
                             buildArgs: "",
                         ]
                         args = defaults + args
-                 //   }
-              //  }
+                    }
+                }
             }
-        }
         stage('Deploy Image') {
             steps {
                 script {
