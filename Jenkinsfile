@@ -1,12 +1,3 @@
-def buildImage(Map args) {
-    def defaults = [
-        dockerfileDir: "./flask-app/",
-        dockerfileName: "Dockerfile",
-        buildArgs: "",
-    ]
-args = defaults + args
-}
-
 pipeline {
     environment {
         imagename = "contid/track2"
@@ -32,7 +23,7 @@ pipeline {
             steps {
                 script {
                         //dockerImage = docker.build("${imagename}:${env.GIT_COMMIT}")
-                        docker.build("${env.dockerfileDir}/${env.dockerfileName}")
+                        docker.build(buildImage)
                 }
             }
         }
@@ -89,4 +80,14 @@ pipeline {
             cleanWs()
         }
     }
+}
+
+def buildImage(Map args) {
+    def defaults = [
+        dockerfileDir: "./flask-app/",
+        dockerfileName: "Dockerfile",
+        buildArgs: "",
+    ]
+    args = defaults + args
+    return args
 }
