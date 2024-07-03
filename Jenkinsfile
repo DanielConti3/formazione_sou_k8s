@@ -23,7 +23,7 @@ pipeline {
             steps {
                 script {
                     sh pwd
-                    sh ls
+             //       sh ls
                     dockerArgs = buildImage()
                     dockerArgs = "${dockerArgs.buildArgs} ${dockerArgs.dockerfileDir} -f ${dockerArgs.dockerfileName}"
                     docker.build(env.imagename, dockerArgs)
@@ -88,7 +88,7 @@ pipeline {
 @NonCPS
 def buildImage() {
     defaults = [
-        dockerfileDir: "~/flask-app/",
+        dockerfileDir: "./flask-app",
         dockerfileName: "Dockerfile",
         buildArgs: "",
     ]
