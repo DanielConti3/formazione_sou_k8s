@@ -20,31 +20,33 @@ pipeline {
         }
         stage('Building Docker image') {
             steps {
-                dockerfile {
-                    filename 'Dockerfile'
-                    dir '/Jenkins/'
+                dockerBuild {
+                    dockerfile {
+                        filename 'Dockerfile'
+                        dir '/Jenkins/'
+                    }
                 }
             }
         }
         stage('Deploy Image') {
             steps {
                 script {
-                    def tag = ""
-                    def additionalTag = ""
-                    if (env.GIT_TAG && env.GIT_TAG != "") {
-                        tag = env.GIT_TAG
-                        additionalTag = 'latest'
-                    } else if (env.BRANCH_NAME == 'main') {
-                        tag = 'latest'
-                    } else if (env.BRANCH_NAME == 'secondary') {
-                        tag = "secondary-${env.GIT_COMMIT}"
-                    } else {
-                        tag = "${env.BRANCH_NAME}-${env.GIT_COMMIT}"
-                    }
+                  //  def tag = ""
+                  //  def additionalTag = ""
+                  //  if (env.GIT_TAG && env.GIT_TAG != "") {
+                      //  tag = env.GIT_TAG
+                      //  additionalTag = 'latest'
+                  //  } else if (env.BRANCH_NAME == 'main') {
+                      //  tag = 'latest'
+                  //  } else if (env.BRANCH_NAME == 'secondary') {
+                   //     tag = "secondary-${env.GIT_COMMIT}"
+                  //  } else {
+                   //     tag = "${env.BRANCH_NAME}-${env.GIT_COMMIT}"
+                  //  }
                     docker.withRegistry('', registryCredential) {
-                        dockerImage.push(tag)
+                        docker.build(imageName: "${imagename}:${tag}").push()
                         if (additionalTag) {
-                            dockerImage.push(additionalTag)
+                            dockerImage.build(imageName: "${imagename}:${additionalTag}").push()
                         }
                     }
                 }
