@@ -21,9 +21,10 @@ pipeline {
         stage('Building Docker image') {
             steps {
                 docker build {
-                    dockerfile {
-                        filename 'Dockerfile'
-                        dir '/Jenkins/'
+                    imageName("${imagename}:${env.GIT_COMMIT}")
+                        dockerfile {
+                            filename 'Dockerfile'
+                            dir '/Jenkins/'
                     }
                 }
             }
