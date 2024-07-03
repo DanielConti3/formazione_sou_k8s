@@ -87,7 +87,7 @@ pipeline {
 @NonCPS
 def buildImage() {
     defaults = [
-        dockerfileDir: "/var/jenkins_home/workspace/flask-app-example-build/flask-app",
+        dockerfileDir: "/var/jenkins_home/workspace/flask-app-example-build_main/flask-app",
         dockerfileName: "Dockerfile",
         buildArgs: "",
     ]
