@@ -20,7 +20,7 @@ pipeline {
         }
         stage('Building Docker image') {
             steps {
-                dockerBuild {
+                docker build {
                     dockerfile {
                         filename 'Dockerfile'
                         dir '/Jenkins/'
