@@ -1,20 +1,20 @@
+# Use the official Python image from the Docker Hub
+FROM python:3.8-slim
 
-FROM jenkins/jenkins:lts-jdk17
+# Set the working directory
+WORKDIR /app
 
-ENV JAVA_OPTS -Djenkins.install.runSetupWizard=false
-ENV CASC_JENKINS_CONFIG /var/jenkins_home/casc.yaml
+# Copy the current directory contents into the container at /app
+COPY . /app
 
-ENV JENKINS_ADMIN_ID admin
-ENV JENKINS_ADMIN_PASSWORD admin
+# Install the necessary packages
+RUN pip install --no-cache-dir flask
 
-USER root
+# Make port 5000 available to the world outside this container
+EXPOSE 5000
 
-RUN apt update -qq && apt install docker.io -y
-RUN usermod -aG docker jenkins
+# Define environment variable
+ENV FLASK_APP=app.py
 
-COPY --chown=jenkins:jenkins casc.yaml /var/jenkins_home/casc.yaml
-COPY --chown=jenkins:jenkins plugins.txt /usr/share/jenkins/ref/plugins.txt
-
-RUN jenkins-plugin-cli -f /usr/share/jenkins/ref/plugins.txt
-
-USER jenkins
+# Run app.py when the container launches
+CMD ["python", "app.py"]
