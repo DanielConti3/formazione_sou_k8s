@@ -56,7 +56,7 @@ pipeline {
             steps {
                 script {
                         //dockerImage = docker.build("${imagename}:${env.GIT_COMMIT}")
-                        docker.build("${dockerImageDir}/${dockerfileName}")
+                        docker.build("${env.dockerImageDir}/${env.dockerfileName}")
                 }
             }
         }
