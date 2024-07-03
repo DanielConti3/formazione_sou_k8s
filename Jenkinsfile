@@ -1,6 +1,6 @@
 pipeline {
     environment {
-        imagename = "honogasensei/formazione_sou"
+        imagename = "contid/track2"
         registryCredential = 'DockerHub'
         dockerImage = ''
     }
