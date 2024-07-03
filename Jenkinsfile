@@ -34,18 +34,18 @@ pipeline {
 //                }
 //            }
 //        }
+        def buildImage(Map args) {
+            def defaults = [
+                dockerfileDir: "./flask-app/",
+                dockerfileName: "Dockerfile",
+                buildArgs: "",
+            ]
+        args = defaults + args
         stage('Building image') {
             steps {
                 script {
-                    def buildImage(Map args) {
-                        def defaults = [
-                            //dockerImage = docker.build("${imagename}:${env.GIT_COMMIT}")
-                            dockerfileDir: "./flask-app/",
-                            dockerfileName: "Dockerfile",
-                            buildArgs: "",
-                        ]
-                        args = defaults + args
-                    }
+                        //dockerImage = docker.build("${imagename}:${env.GIT_COMMIT}")
+                        buildImage(args)
                 }
             }
         }
