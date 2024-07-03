@@ -22,8 +22,9 @@ pipeline {
         stage('Building image') {
             steps {
                 script {
-                        //dockerImage = docker.build("${imagename}:${env.GIT_COMMIT}")
-                        docker.build(buildImage())
+                    dockerArgs = buildImage()
+                    dockerArgs = "${dockerArgs.buildArgs} ${dockerArgs.dockerfileDir} -f ${dockerArgs.dockerfileName}"
+                    docker.build(env.imagename, dockerArgs)
                 }
             }
         }
