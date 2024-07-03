@@ -35,7 +35,7 @@ pipeline {
 //            }
 //        }
         stage('Building image') {
-            steps {
+           // steps {
                // script {
                     def buildAndPushTag(Map args) {
                         def defaults = [
@@ -46,7 +46,7 @@ pipeline {
                             buildArgs: "",
                         ]
                  //   }
-                }
+              //  }
             }
         }
         stage('Deploy Image') {
