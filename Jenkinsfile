@@ -1,17 +1,18 @@
+def buildImage(Map args) {
+    def defaults = [
+        dockerfileDir: "./flask-app/",
+        dockerfileName: "Dockerfile",
+        buildArgs: "",
+    ]
+args = defaults + args
+}
+
 pipeline {
     environment {
         imagename = "contid/track2"
         registryCredential = 'DockerHub'
         dockerImage = ''
     }
-        def buildImage(Map args) {
-            def defaults = [
-                dockerfileDir: "./flask-app/",
-                dockerfileName: "Dockerfile",
-                buildArgs: "",
-            ]
-        args = defaults + args
-        }
     agent any
     stages {
         stage('Clean Workspace') {
