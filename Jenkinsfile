@@ -34,7 +34,7 @@ pipeline {
           //      }
         //    }
       //  }
-        stage('Building image') {
+        stage('Build Docker image') {
             steps {
                 dockerfile {
                     filename 'Dockerfile'
