@@ -11,7 +11,7 @@ pipeline {
     environment {
         imagename = "contid/track2"
         registryCredential = 'DockerHub'
-        dockerImage = ''
+        dockerImage = ""
     }
     agent any
     stages {
@@ -55,7 +55,8 @@ pipeline {
             steps {
                 script {
                         //dockerImage = docker.build("${imagename}:${env.GIT_COMMIT}")
-                       dockerImage([:])
+                        dockerImage = defaults['dockerfileDir'] + "/" + defaults['dockerfileName']
+                        docker.build(dockerImage)
                 }
             }
         }
