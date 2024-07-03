@@ -84,12 +84,13 @@ pipeline {
 }
 
 @NonCPS
-def buildImage(Map args) {
+def buildImage() {
     defaults = [
         dockerfileDir: "./flask-app/",
         dockerfileName: "Dockerfile",
         buildArgs: "",
     ]
-    args = defaults + args
+    //args = defaults + args
+    args = defaults
     return args
 }
