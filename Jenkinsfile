@@ -1,6 +1,6 @@
 def dockerImage(Map args) {
     def defaults = [
-        dockerfileDir: "./flask-app/",
+        dockerfileDir: "~/formazione_sou_k8s/flask-app/",
         dockerfileName: "Dockerfile",
         buildArgs: "",
 //        dockerImage: "${dockerImageDir}/${dockerfileName}"
