@@ -83,6 +83,7 @@ pipeline {
     }
 }
 
+@NonCPS
 def buildImage(Map args) {
     def defaults = [
         dockerfileDir: "./flask-app/",
