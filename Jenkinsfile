@@ -27,7 +27,7 @@ pipeline {
                     dockerArgs = buildImage()
                     dockerArgs = "${dockerArgs.buildArgs} -f ${dockerArgs.dockerfileName} ${WORKSPACE}/flask-app/"
              //       docker.build(env.imagename, dockerArgs)
-                    sh "docker build . ${dockerArgs.buildArgs} -f ${dockerArgs.dockerfileName} ${WORKSPACE}/flask-app/"
+                    sh "docker build . contid/track2 -f Dockerfile ${WORKSPACE}/flask-app/"
                 }
             }
         }
