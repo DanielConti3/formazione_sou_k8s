@@ -37,9 +37,15 @@ pipeline {
         stage('Building image') {
             steps {
                 script {
-                    //dockerImage = docker.build("${imagename}:${env.GIT_COMMIT}")
-                    dockerfileDir: "./flask-app/",
-                    dockerfileName: "Dockerfile",
+                    def buildAndPushTag(Map args) {
+                        def defaults = [
+                            //dockerImage = docker.build("${imagename}:${env.GIT_COMMIT}")
+                            registryUrl: 'https://hub.docker.com/repository/docker/contid/track2/general',
+                            dockerfileDir: "./flask-app/",
+                            dockerfileName: "Dockerfile",
+                            buildArgs: "",
+                        ]
+                    }
                 }
             }
         }
