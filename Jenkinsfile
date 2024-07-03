@@ -36,7 +36,7 @@ pipeline {
 //        }
         stage('Building image') {
             steps {
-                script {
+               // script {
                     def buildAndPushTag(Map args) {
                         def defaults = [
                             //dockerImage = docker.build("${imagename}:${env.GIT_COMMIT}")
