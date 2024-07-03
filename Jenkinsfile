@@ -41,6 +41,7 @@ pipeline {
                 buildArgs: "",
             ]
         args = defaults + args
+        }
         stage('Building image') {
             steps {
                 script {
