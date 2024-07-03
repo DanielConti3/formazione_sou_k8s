@@ -21,9 +21,8 @@ pipeline {
         }
         stage('Building image') {
             steps {
+                sh "pwd"
                 script {
-              //      sh pwd
-             //       sh ls
                     dockerArgs = buildImage()
                     dockerArgs = "${dockerArgs.buildArgs} ${dockerArgs.dockerfileDir} -f ${dockerArgs.dockerfileName}"
                     docker.build(env.imagename, dockerArgs)
