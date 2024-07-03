@@ -17,23 +17,23 @@ pipeline {
                     // Clona il repository senza specificare un branch fisso
                     checkout scm
                     // Ottieni l'ultimo tag Git disponibile
-                    env.GIT_TAG = sh(script: 'git describe --tags --abbrev=0 || echo ""', returnStdout: true).trim()
+//                    env.GIT_TAG = sh(script: 'git describe --tags --abbrev=0 || echo ""', returnStdout: true).trim()
                     // Ottieni il nome del branch
-                    env.BRANCH_NAME = env.GIT_BRANCH.replaceAll('origin/', '')
-                    echo "Cloned Branch: ${env.BRANCH_NAME}"
-                    echo "Git Tag: ${env.GIT_TAG}"
+//                    env.BRANCH_NAME = env.GIT_BRANCH.replaceAll('origin/', '')
+//                    echo "Cloned Branch: ${env.BRANCH_NAME}"
+//                    echo "Git Tag: ${env.GIT_TAG}"
                 }
             }
         }
-        stage('Debug Info') {
-            steps {
-                script {
-                    echo "Branch Name: ${env.BRANCH_NAME}"
-                    echo "Git Commit: ${env.GIT_COMMIT}"
-                    echo "Git Tag: ${env.GIT_TAG}"
-                }
-            }
-        }
+//        stage('Debug Info') {
+//            steps {
+//                script {
+//                    echo "Branch Name: ${env.BRANCH_NAME}"
+//                    echo "Git Commit: ${env.GIT_COMMIT}"
+//                    echo "Git Tag: ${env.GIT_TAG}"
+//                }
+//            }
+//        }
         stage('Building image') {
             steps {
                 script {
