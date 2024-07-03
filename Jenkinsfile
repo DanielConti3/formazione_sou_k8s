@@ -38,7 +38,7 @@ pipeline {
             steps {
                 script {
                     //dockerImage = docker.build("${imagename}:${env.GIT_COMMIT}")
-                    dockerfileDir: "flask-app",
+                    dockerfileDir: "~/formazione_sou_k8s/flask-app",
                     dockerfileName: "Dockerfile",
                 }
             }
