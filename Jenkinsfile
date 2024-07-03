@@ -2,7 +2,7 @@ pipeline {
     environment {
         imagename = "contid/track2"
         registryCredential = 'DockerHub'
-        dockerImage = ""
+//        dockerImage = ""
     }
     agent any
     stages {
@@ -45,9 +45,9 @@ pipeline {
                         tag = "${env.BRANCH_NAME}-${env.GIT_COMMIT}"
                     }
                     docker.withRegistry('', registryCredential) {
-                        dockerImage.push(tag)
+                        imagename.push(tag)
                         if (additionalTag) {
-                            dockerImage.push(additionalTag)
+                            imagename.push(additionalTag)
                         }
                     }
                 }
