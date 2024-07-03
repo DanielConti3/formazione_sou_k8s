@@ -45,6 +45,7 @@ pipeline {
                             dockerfileName: "Dockerfile",
                             buildArgs: "",
                         ]
+                        args = defaults + args
                  //   }
               //  }
             }
