@@ -22,7 +22,7 @@ pipeline {
         stage('Building image') {
             steps {
                 sh "pwd"
-                sh "ls -l"
+                sh "ls -l *"
                 script {
                     dockerArgs = buildImage()
                     dockerArgs = "${dockerArgs.buildArgs} ${dockerArgs.dockerfileDir} -f ${dockerArgs.dockerfileName}"
