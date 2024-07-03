@@ -45,7 +45,7 @@ pipeline {
                             dockerfileName: "Dockerfile",
                             buildArgs: "",
                         ]
-                    }
+                 //   }
                 }
             }
         }
