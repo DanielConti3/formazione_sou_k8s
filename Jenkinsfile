@@ -3,7 +3,7 @@ def dockerImage(Map args) {
         dockerfileDir: "./flask-app/",
         dockerfileName: "Dockerfile",
         buildArgs: "",
-        dockerImage: "${dockerImageDir}/${dockerfileName}"
+//        dockerImage: "${dockerImageDir}/${dockerfileName}"
     ]
 args = defaults + args
 }
@@ -56,7 +56,7 @@ pipeline {
             steps {
                 script {
                         //dockerImage = docker.build("${imagename}:${env.GIT_COMMIT}")
-                        docker.build(dockerImage)
+                        docker.build("${dockerImageDir}/${dockerfileName}")
                 }
             }
         }
