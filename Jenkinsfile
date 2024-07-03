@@ -3,7 +3,6 @@ def buildImage(Map args) {
         dockerfileDir: "./flask-app/",
         dockerfileName: "Dockerfile",
         buildArgs: "",
-//        dockerImage: "${dockerImageDir}/${dockerfileName}"
     ]
 args = defaults + args
 }
