@@ -45,6 +45,7 @@ pipeline {
                         def tag = ""
                         def additionalTag = ""
                         //def customImage = sh "docker build . -t contid/track2:1.0.1 -f ${WORKSPACE}/flask-app/Dockerfile"
+                        def customImage = "docker.build(imagename, dockerArgs)"
                         if (env.GIT_TAG && env.GIT_TAG != "") {
                             tag = env.GIT_TAG
                             additionalTag = 'latest'
