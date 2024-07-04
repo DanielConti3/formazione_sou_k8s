@@ -92,7 +92,7 @@ def buildImage() {
         dockerfileName: "Dockerfile",
         buildArgs: "",
     ]
-    args = defaults + args
-    //args = defaults
+    //args = defaults + args
+    args = defaults
     return args
 }
