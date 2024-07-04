@@ -19,7 +19,7 @@ pipeline {
                 }
             }
         }
-        stage('Building image') {
+        stage('Building and Deploying image') {
             steps {
                 script {
                     dockerArgs = buildImage()
@@ -44,7 +44,7 @@ pipeline {
                     } else {
                         tag = "${env.BRANCH_NAME}-${env.GIT_COMMIT}"
                     }
-                    docker.withRegistry('https://hub.docker.com/repository/docker/contid/track2/general', registryCredential) {
+                    docker.withRegistry('', registryCredential) {
                         imagename.push(tag)
                         if (additionalTag) {
                             imagename.push(additionalTag)
@@ -87,11 +87,14 @@ pipeline {
 @NonCPS
 def buildImage() {
     defaults = [
+        registryUrl: 'https://hub.docker.com/repository/docker/contid/track2/general',
         dockerfileDir: "/var/jenkins_home/workspace/flask-app-example-build_main/flask-app",
         dockerfileName: "Dockerfile",
         buildArgs: "",
     ]
-    //args = defaults + args
-    args = defaults
+    args = defaults + args
+    //args = defaults
+    docker.withRegistry(args.registryUrl) {
     return args
+    }
 }
