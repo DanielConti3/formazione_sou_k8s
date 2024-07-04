@@ -17,6 +17,12 @@ pipeline {
                 script {
                     // Clona il repository senza specificare un branch fisso
                     checkout scm
+                    // Ottieni l'ultimo tag Git disponibile
+                    env.GIT_TAG = sh(script: 'git describe --tags --abbrev=0 || echo ""', returnStdout: true).trim()
+                    // Ottieni il nome del branch
+                    env.BRANCH_NAME = env.GIT_BRANCH.replaceAll('origin/', '')
+                    echo "Cloned Branch: ${env.BRANCH_NAME}"
+                    echo "Git Tag: ${env.GIT_TAG}"
                 }
             }
         }
@@ -60,10 +66,6 @@ pipeline {
                             tag = "${env.BRANCH_NAME}-${env.GIT_COMMIT}"
                         }
                         //docker.withRegistry(env.registryCredential) {
-                            env.GIT_TAG = sh(script: 'git describe --tags --abbrev=0 || echo ""', returnStdout: true).trim()
-                            env.BRANCH_NAME = env.GIT_BRANCH.replaceAll('origin/', '')
-                            echo "Cloned Branch: ${env.BRANCH_NAME}"
-                            echo "Git Tag: ${env.GIT_TAG}"
                             customImage.push(tag)
                             if (additionalTag) {
                                 customImage.push(additionalTag)
