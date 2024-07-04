@@ -22,9 +22,9 @@ pipeline {
         stage('Build image') {
             steps {
                 script {
-                    dockerArgs = buildImage()
-                    dockerArgs = "${dockerArgs.buildArgs} -f ${dockerArgs.dockerfileName} ${WORKSPACE}/flask-app/"
-                    def customImage = "docker.build(imagename, dockerArgs)"
+                    //dockerArgs = buildImage()
+                    //dockerArgs = "${dockerArgs.buildArgs} -f ${dockerArgs.dockerfileName} ${WORKSPACE}/flask-app/"
+                    //def customImage = "docker.build(imagename, dockerArgs)"
                     //def customImage = sh "docker build . -t contid/track2:1.0.1 -f ${WORKSPACE}/flask-app/Dockerfile"
                 }
             }
@@ -47,7 +47,9 @@ pipeline {
                             tag = "${env.BRANCH_NAME}-${env.GIT_COMMIT}"
                         }
                         //docker.withRegistry(env.registryCredential) {
-                            customImage.push()
+                            dockerArgs = buildImage()
+                            dockerArgs = "${dockerArgs.buildArgs} -f ${dockerArgs.dockerfileName} ${WORKSPACE}/flask-app/"
+                            def customImage = "docker.build(imagename, dockerArgs)"
                             customImage.push(tag)
                             if (additionalTag) {
                                 customImage.push(additionalTag)
