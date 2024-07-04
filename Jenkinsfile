@@ -2,7 +2,7 @@ pipeline {
     environment {
         imagename = "contid/track2"
         registryCredential = 'DockerHub'
-        customImage = ""
+        //customImage = ""
     }
     agent any
     stages {
@@ -25,7 +25,7 @@ pipeline {
                     dockerArgs = buildImage()
                     dockerArgs = "${dockerArgs.buildArgs} -f ${dockerArgs.dockerfileName} ${WORKSPACE}/flask-app/"
                     //docker.build(env.imagename, dockerArgs)
-                    def customImage = sh "docker build . -t contid/track2:1.0.1 -f ${WORKSPACE}/flask-app/Dockerfile"
+                    //def customImage = sh "docker build . -t contid/track2:1.0.1 -f ${WORKSPACE}/flask-app/Dockerfile"
                 }
             }
         }
@@ -34,6 +34,7 @@ pipeline {
                 script {
                     def tag = ""
                     def additionalTag = ""
+                    def customImage = sh "docker build . -t contid/track2:1.0.1 -f ${WORKSPACE}/flask-app/Dockerfile"
                     if (env.GIT_TAG && env.GIT_TAG != "") {
                         tag = env.GIT_TAG
                         additionalTag = 'latest'
