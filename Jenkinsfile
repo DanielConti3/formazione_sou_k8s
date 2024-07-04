@@ -45,9 +45,9 @@ pipeline {
                         tag = "${env.BRANCH_NAME}-${env.GIT_COMMIT}"
                     }
                     docker.withRegistry(env.registryCredential) {
-                        dockerImage.push(tag)
+                        docker.push(tag)
                         if (additionalTag) {
-                            dockerImage.push(additionalTag)
+                            docker.push(additionalTag)
                         }
                     }
                 }
