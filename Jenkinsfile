@@ -32,23 +32,24 @@ pipeline {
         stage('Deploy Image') {
             steps {
                 script {
-                    def tag = ""
-                    def additionalTag = ""
-                    def customImage = sh "docker build . -t contid/track2:1.0.1 -f ${WORKSPACE}/flask-app/Dockerfile"
-                    if (env.GIT_TAG && env.GIT_TAG != "") {
-                        tag = env.GIT_TAG
-                        additionalTag = 'latest'
-                    } else if (env.BRANCH_NAME == 'main') {
-                        tag = 'latest'
-                    } else if (env.BRANCH_NAME == 'secondary') {
-                        tag = "secondary-${env.GIT_COMMIT}"
-                    } else {
-                        tag = "${env.BRANCH_NAME}-${env.GIT_COMMIT}"
-                    }
                     docker.withRegistry(env.registryCredential) {
-                        customImage.push(tag)
-                        if (additionalTag) {
-                            customImage.push(additionalTag)
+                        def tag = ""
+                        def additionalTag = ""
+                        def customImage = sh "docker build . -t contid/track2:1.0.1 -f ${WORKSPACE}/flask-app/Dockerfile"
+                        if (env.GIT_TAG && env.GIT_TAG != "") {
+                            tag = env.GIT_TAG
+                            additionalTag = 'latest'
+                        } else if (env.BRANCH_NAME == 'main') {
+                            tag = 'latest'
+                        } else if (env.BRANCH_NAME == 'secondary') {
+                            tag = "secondary-${env.GIT_COMMIT}"
+                        } else {
+                            tag = "${env.BRANCH_NAME}-${env.GIT_COMMIT}"
+                        }
+                        //docker.withRegistry(env.registryCredential) {
+                            customImage.push(tag)
+                            if (additionalTag) {
+                                customImage.push(additionalTag)
                         }
                     }
                 }
