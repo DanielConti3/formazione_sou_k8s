@@ -29,6 +29,15 @@ pipeline {
                 }
             }
         }
+        stage('Debug Info') {
+            steps {
+                script {
+                    echo "Branch Name: ${env.BRANCH_NAME}"
+                    echo "Git Commit: ${env.GIT_COMMIT}"
+                    echo "Git Tag: ${env.GIT_TAG}"
+                }
+            }
+        }
         stage('Deploy Image') {
             steps {
                 script {
