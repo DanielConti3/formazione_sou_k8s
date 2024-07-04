@@ -22,7 +22,14 @@ pipeline {
         stage('Build Image') {
             steps {
                 script {
-                    docker.push(buildImage)
+                    docker.withRegistry(args.registryUrl) {
+                        def customImage = sh "docker build . -t contid/track2:1.0.1 -f ${WORKSPACE}/flask-app/Dockerfile"
+                        image.push(args.buildTag)
+                        if(args.pushLatest) {
+                            image.push("latest")
+                            sh "docker rmi --force ${args.image}:latest"
+                        }
+                        sh "docker rmi --force ${args.image}:${args.buildTag}"
                 }
             }
         }
@@ -45,14 +52,6 @@ def buildImage() {
     ]
     args = defaults + args
     //args = defaults
-    docker.withRegistry(args.registryUrl) {
-        def customImage = sh "docker build . -t contid/track2:1.0.1 -f ${WORKSPACE}/flask-app/Dockerfile"
-        image.push(args.buildTag)
-        if(args.pushLatest) {
-            image.push("latest")
-            sh "docker rmi --force ${args.image}:latest"
-        }
-        sh "docker rmi --force ${args.image}:${args.buildTag}"
     return args
   }
 }
