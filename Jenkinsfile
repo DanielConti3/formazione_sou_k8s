@@ -3,6 +3,7 @@ pipeline {
         imagename = "contid/track2"
         registryCredential = 'DockerHub'
         //customImage = ""
+        GIT_TAG = '1.0.1'
     }
     agent any
     stages {
