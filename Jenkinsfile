@@ -44,12 +44,12 @@ pipeline {
                     } else {
                         tag = "${env.BRANCH_NAME}-${env.GIT_COMMIT}"
                     }
-                    //docker.withRegistry(env.registryCredential) {
-                        //customImage.push(tag)
-                        //if (additionalTag) {
-                            //customImage.push(additionalTag)
-                        //}
-                    //}
+                    docker.withRegistry(env.registryCredential) {
+                        customImage.push(tag)
+                        if (additionalTag) {
+                            customImage.push(additionalTag)
+                        }
+                    }
                 }
             }
         }
