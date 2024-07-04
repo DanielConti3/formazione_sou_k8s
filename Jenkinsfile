@@ -19,6 +19,13 @@ pipeline {
                 }
             }
         }
+        stage('Build Image') {
+            steps {
+                script {
+                    docker.push(buildImage)
+                }
+            }
+        }
     }
     post {
         always {
