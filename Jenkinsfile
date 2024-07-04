@@ -51,7 +51,7 @@ pipeline {
                     docker.withRegistry(env.registryCredential) {
                         def tag = ""
                         def additionalTag = ""
-                        def customImage = sh "docker build . -t contid/track2:1.0.1 -f ${WORKSPACE}/flask-app/Dockerfile"
+                        def customImage = sh "docker build . -t contid/track2 -f ${WORKSPACE}/flask-app/Dockerfile"
                         //dockerArgs = buildImage()
                         //dockerArgs = "${dockerArgs.buildArgs} -f ${dockerArgs.dockerfileName} ${WORKSPACE}/flask-app/"
                         //def customImage = "docker.build(imagename, dockerArgs)"
