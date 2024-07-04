@@ -15,7 +15,8 @@ pipeline {
                 script {
                     // Clona il repository senza specificare un branch fisso
                     checkout scm
-                    sh(script: 'pwd', returnStdout: true)
+                    env.ciao = sh(script: 'pwd', returnStdout: true)
+                    echo "Folder is: ${env.ciao}"
                     // Ottieni l'ultimo tag Git disponibile
                     env.GIT_TAG = sh(script: 'git describe --tags --abbrev=0 || echo ""', returnStdout: true).trim()
                     // Ottieni il nome del branch
