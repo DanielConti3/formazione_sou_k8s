@@ -44,7 +44,7 @@ pipeline {
                     docker.withRegistry(env.registryCredential) {
                         def tag = ""
                         def additionalTag = ""
-                        def customImage = sh "docker build . -t contid/track2:1.0.1 -f ${WORKSPACE}/flask-app/Dockerfile"
+                        //def customImage = sh "docker build . -t contid/track2:1.0.1 -f ${WORKSPACE}/flask-app/Dockerfile"
                         if (env.GIT_TAG && env.GIT_TAG != "") {
                             tag = env.GIT_TAG
                             additionalTag = 'latest'
@@ -56,6 +56,10 @@ pipeline {
                             tag = "${env.BRANCH_NAME}-${env.GIT_COMMIT}"
                         }
                         //docker.withRegistry(env.registryCredential) {
+                            env.GIT_TAG = sh(script: 'git describe --tags --abbrev=0 || echo ""', returnStdout: true).trim()
+                            env.BRANCH_NAME = env.GIT_BRANCH.replaceAll('origin/', '')
+                            echo "Cloned Branch: ${env.BRANCH_NAME}"
+                            echo "Git Tag: ${env.GIT_TAG}"
                             customImage.push(tag)
                             if (additionalTag) {
                                 customImage.push(additionalTag)
