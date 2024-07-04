@@ -29,8 +29,8 @@ pipeline {
                 script {
                     dockerArgs = buildImage()
                     dockerArgs = "${dockerArgs.buildArgs} -f ${dockerArgs.dockerfileName} ${WORKSPACE}/flask-app/"
-                    //def customImage = "docker.build(imagename, dockerArgs)"
-                    customImage = sh "docker build . -t contid/track2 -f ${WORKSPACE}/flask-app/Dockerfile"
+                    customImage = "docker.build(imagename, dockerArgs)"
+                    //customImage = sh "docker build . -t contid/track2 -f ${WORKSPACE}/flask-app/Dockerfile"
                 }
             }
         }
