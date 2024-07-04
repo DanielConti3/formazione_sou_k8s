@@ -30,6 +30,7 @@ pipeline {
                             sh "docker rmi --force ${args.image}:latest"
                         }
                         sh "docker rmi --force ${args.image}:${args.buildTag}"
+                    }
                 }
             }
         }
