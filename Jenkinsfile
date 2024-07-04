@@ -44,7 +44,7 @@ pipeline {
                     } else {
                         tag = "${env.BRANCH_NAME}-${env.GIT_COMMIT}"
                     }
-                    docker.withRegistry('', registryCredential) {
+                    docker.withRegistry('https://hub.docker.com/repository/docker/contid/track2/general', registryCredential) {
                         imagename.push(tag)
                         if (additionalTag) {
                             imagename.push(additionalTag)
