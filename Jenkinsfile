@@ -15,10 +15,8 @@ pipeline {
                 script {
                     // Clona il repository senza specificare un branch fisso
                     checkout scm
-                    env.ciao = sh(script: 'pwd', returnStdout: true)
-                    echo "Folder is: ${env.ciao}"
                     // Ottieni l'ultimo tag Git disponibile
-                    env.GIT_TAG = sh(script: 'cd /var/jenkins_home/workspace/flask-app-example-build_main; git describe --tags --abbrev=0 || echo ""', returnStdout: true).trim()
+                    env.GIT_TAG = sh(script: 'git describe --tags --abbrev=0', returnStdout: true).trim()
                     // Ottieni il nome del branch
                     env.BRANCH_NAME = env.GIT_BRANCH.replaceAll('origin/', '')
                     echo "Cloned Branch: ${env.BRANCH_NAME}"
