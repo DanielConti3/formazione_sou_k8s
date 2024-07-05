@@ -93,7 +93,7 @@ pipeline {
                         sh "docker rmi ${tagImage}"
                     }
                     if (sh(script: "docker images -q ${additionalTagImage}", returnStdout: true).trim()) {
-                        sn "docker rmi ${additionalTagImage}"
+                        sh "docker rmi ${additionalTagImage}"
                     }
                 }
             }
