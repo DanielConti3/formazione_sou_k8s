@@ -110,7 +110,8 @@ pipeline {
 def buildImage() {
     def defaults = [
         registryUrl: 'https://hub.docker.com/repository/docker/contid/track2/general',
-        dockerfileDir: "/var/jenkins_home/workspace/flask-app-example-build_main/flask-app",
+        //dockerfileDir: "/var/jenkins_home/workspace/flask-app-example-build_main/flask-app",
+        dockerfileDir: "${WORKSPACE}/flask-app",
         dockerfileName: "Dockerfile",
         buildArgs: ""
     ]
