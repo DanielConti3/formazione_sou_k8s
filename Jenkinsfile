@@ -29,7 +29,8 @@ pipeline {
                 script {
                     def dockerArgs = buildImage()
                     def dockerfilePath = "${dockerArgs.dockerfileDir}/${dockerArgs.dockerfileName}"
-                    customImage = docker.build("${imagename}:${env.GIT_TAG}", "-f ${dockerfilePath} ${dockerArgs.dockerfileDir}")
+                    customImage = docker.build("${imagename}:${env.GIT_TAG}", "-f ${dockerfilePath}")
+                    // ${dockerArgs.dockerfileDir}
                 }
             }
         }
