@@ -81,10 +81,19 @@ pipeline {
                     } else {
                         tag = "${env.BRANCH_NAME}-${env.GIT_COMMIT}"
                     }
-                    sh "docker rmi ${imagename}:${env.GIT_COMMIT}"
-                    sh "docker rmi ${imagename}:${tag}"
-                    if (additionalTag) {
-                        sh "docker rmi ${imagename}:${additionalTag}"
+                    def commitImage = "${imagename}:${env.GIT_COMMIT}"
+                    def tagImage = "${imagename}:${tag}"
+                    def additionalTagImage = "${imagename}:${additionalTag}"
+
+                    // Check and remove images if they exist
+                    if (sh(script: "docker images -q ${commitImage}", returnStdout: true).trim()) {
+                        sh "docker rmi ${commitImage}"
+                    }
+                    if (sh(script: "docker images -q ${tagImage}", returnStdout: true).trim()) {
+                        sh "docker rmi ${tagImage}"
+                    }
+                    if (sh(script: "docker images -q ${additionalTagImage}", returnStdout: true).trim()) {
+                        sn "docker rmi ${additionalTagImage}"
                     }
                 }
             }
