@@ -13,11 +13,11 @@ pipeline {
         stage('Cloning Git') {
             steps {
                 script {
-                    // Clona il repository senza specificare un branch fisso
+                    // lone the repository without specifying a fixed branch
                     checkout scm
-                    // Ottieni l'ultimo tag Git disponibile
+                    // Obtain the last available git tag
                     env.GIT_TAG = sh(script: 'git describe --tags --abbrev=0', returnStdout: true).trim()
-                    // Ottieni il nome del branch
+                    // Obtain the branch's name
                     env.BRANCH_NAME = env.GIT_BRANCH.replaceAll('origin/', '')
                     echo "Cloned Branch: ${env.BRANCH_NAME}"
                     echo "Git Tag: ${env.GIT_TAG}"
