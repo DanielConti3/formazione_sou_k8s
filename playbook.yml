@@ -107,7 +107,7 @@
           path: /home/vagrant
           dockerfile: Dockerfile.slave
 
-     - name: Start jenkins slave container
+    - name: Start jenkins slave container
       docker_container:
         name: jenkins-slave
         image: my-jenkins-slave-with-helm
