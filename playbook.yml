@@ -55,7 +55,22 @@
         state: started
         enabled: yes
 
-    - name: Build Docker image
+    - name: Create Docker Network
+      docker_network:
+        name: jenkins-net
+        driver: bridge
+        ipam_config:
+          - subnet: 172.18.0.0/16
+
+    - name: Ensure Jenkins home directory exists with the correct permissions
+      file:
+        path: /var/jenkins_home
+        state: directory
+        owner: 1000
+        group: 1000
+        mode: "0755"
+
+    - name: Build Docker image for jenkins master
       docker_image:
         name: jenkins/jenkins
         source: build
@@ -63,7 +78,7 @@
           path: ./
           dockerfile: Dockerfile
 
-    - name: Start jenkins container
+    - name: Start jenkins master container
       docker_container:
         name: jenkins
         image: jenkins/jenkins
@@ -72,9 +87,45 @@
           - "50000:50000"
         volumes: 
           - /var/run/docker.sock:/var/run/docker.sock
+        networks:
+          - name: jenkins-net
+            ipv4_address: 172.18.0.3
+
+    - name: Copy Dockerfile for slave
+      ansible.builtin.template:
+        src: ./Dockerfile.slave
+        dest: /home/vagrant/Dockerfile.slave
+        owner: vagrant
+        group: vagrant
+        mode: "0740"
+
+    - name: Build Docker image for jenkins slave
+      docker_image:
+        name: my-jenkins-slave-with-helm
+        source: build
+        build:
+          path: /home/vagrant
+          dockerfile: Dockerfile.slave
+
+     - name: Start jenkins slave container
+      docker_container:
+        name: jenkins-slave
+        image: my-jenkins-slave-with-helm
+        env:
+          JENKINS_URL: https://172.18.0.3:8000/
+          JENKINS_AGENT_NAME: "jenkins-slave"
+          JENKINS_SECRET: "YOUR_JENKINS_SECRET"
+        networks:
+          - name: jenkins-net
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
+          - /var/jenkins_home:/var/jenkins_home
+
+    - name: Set permissions docker.sock
+      command: sudo docker exec -u root jenkins-master chown root:docker /var/run/docker.sock
     
     - name: Set permissions docker.sock
-      command: sudo docker exec -u root jenkins chown root:docker /var/run/docker.sock 
+      command: sudo docker exec -u root jenkins-slave chown root:docker /var/run/docker.sock 
 
         
 
