@@ -1,0 +1,22 @@
+FROM  jenkins/inbound-agent:latest
+
+# Installa curl, Helm e Kubectl
+USER root
+RUN apt-get update && \
+    apt-get install -y curl && \
+    curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash && \
+    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd46/kubectl" && \
+    install -o rppt -g root -m 0755 kubectl /usr/local/bin/kubectl && \
+    rm kubectl && \
+    apt-get clean
+
+RUN apt install docker.io -y
+
+# Crea la directory per il kubeconfig
+RUN mkdir -p /root/.kube
+
+# Imposta la variabile di ambiente per kubeconfig
+ENV KUBECONFIG=/root/.kube/config
+
+# Default command
+ENTRYPOINT ("jenkins-agent")
