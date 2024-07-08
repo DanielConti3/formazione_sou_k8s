@@ -6,7 +6,7 @@ RUN apt-get update && \
     apt-get install -y curl && \
     curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash && \
     curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd46/kubectl" && \
-    install -o rppt -g root -m 0755 kubectl /usr/local/bin/kubectl && \
+    install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl && \
     rm kubectl && \
     apt-get clean
 
