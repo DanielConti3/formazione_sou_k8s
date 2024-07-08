@@ -89,7 +89,7 @@
           - /var/run/docker.sock:/var/run/docker.sock
         networks:
           - name: jenkins-net
-            ipv4_address: 172.18.0.3
+            ipv4_address: 172.18.0.2
 
     - name: Copy Dockerfile for slave
       ansible.builtin.template:
@@ -112,11 +112,12 @@
         name: jenkins-slave
         image: my-jenkins-slave-with-helm
         env:
-          JENKINS_URL: https://172.18.0.3:8000/
+          JENKINS_URL: https://172.18.0.2:8000/
           JENKINS_AGENT_NAME: "jenkins-slave"
           JENKINS_SECRET: "YOUR_JENKINS_SECRET"
         networks:
           - name: jenkins-net
+            ipv4_address: 172.18.0.3
         volumes:
           - /var/run/docker.sock:/var/run/docker.sock
           - /var/jenkins_home:/var/jenkins_home
