@@ -95,4 +95,3 @@ docker-java-api: 3.3.6-90.ve7c5c7535ddd
 cloud-stats: 336.v788e4055508b_
 docker-plugin: 1.6.2
 authorize-project:latest
-configuration-as-code:1810.v9b_c30a_249a_4c
