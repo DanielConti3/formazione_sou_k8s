@@ -80,7 +80,7 @@
 
     - name: Start jenkins master container
       docker_container:
-        name: jenkins
+        name: jenkins-master
         image: jenkins/jenkins
         ports: 
           - "8080:8080"
