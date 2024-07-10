@@ -2,6 +2,8 @@ FROM  jenkins/inbound-agent:latest
 
 # Installa curl, Helm e Kubectl
 USER root
+
+LABEL node="jenkins-slave"
 RUN apt-get update && \
     apt-get install -y curl && \
     curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash && \
